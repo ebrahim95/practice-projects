@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzOWZmNTU5OGFiMGY4ZWNjMGY1YTg2NSIsImlhdCI6MTY3MzEyMTc0MSwiZXhwIjoxNjczMTI1MzQxfQ.MOlrLe-M2L6fgzCWM-f574NkZMQ-iIV3h6rugl7LpSM 
+
+{
+  "title": "run like me",
+  "author": "Ebrahim Haji",
+  "url": "yahoo.com",
+  "likes": 3
+}

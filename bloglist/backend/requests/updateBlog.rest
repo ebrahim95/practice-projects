@@ -1,0 +1,11 @@
+PUT http://localhost:3003/api/blogs/639cd4f83c92272f45d3a3d5
+Content-Type: application/json
+
+{
+    "title": "eat, sleep, repeat",
+    "author": "Ebrahim Haji",
+    "url": "google.com",
+    "likes": 5,
+    "user": "639cd4a83c92272f45d3a3d1",
+    "id": "639cd4f83c92272f45d3a3d5"
+}

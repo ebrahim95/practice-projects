@@ -1,0 +1,17 @@
+.red {
+  border: 5px solid red;
+  background-color: rgb(238, 169, 169);
+  color: rgb(255, 0, 0);
+  font-size: 20px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.green {
+  border: 5px solid green;
+  background-color: rgb(184, 247, 184);
+  color: black;
+  padding: 10px;
+  margin: 5px;
+  font-size: 20px;
+}
