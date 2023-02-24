@@ -25,10 +25,12 @@ const App = () => {
     }, [getAll])
 
 
-  const handleNotification = (message) => {
-    setNotification(message)
-    setTimeout( () => setNotification(null), 5000)
-  }
+    
+    useEffect(() => {
+      setTimeout(() => setNotification(null), 5000)
+  }, [notification])
+
+
   const handleNameChange = event => setNewName(event.target.value)
   const handleNewNumber = event => setNewNumber(event.target.value)
   const handleSearch = event => setSearch(event.target.value)
@@ -37,7 +39,7 @@ const App = () => {
     if (window.confirm(`Delete ${deletePerson.name}`)) {
       remove(id)
       setPersons(persons.filter(person => person.id !== id))
-      handleNotification(`Removed ${deletePerson.name}`)
+      setNotification(`Removed ${deletePerson.name}`)
     }
   }
 
@@ -49,7 +51,6 @@ const App = () => {
 
   const addPerson = event => {
     event.preventDefault()
-    
     const newPerson = {
       name: newName,
       number: newNumber,
@@ -60,10 +61,14 @@ const App = () => {
       create(newPerson)
       .then(returnedPerson => {
         setPersons([...persons, returnedPerson])
-        handleNotification(`Added ${newPerson.name}`)
+        setNotification(`Added ${newPerson.name}`)
+        event.target[0].value = ""
+        event.target[1].value = ""
+        setNewName("")
+        setNewNumber("")
       })
       .catch(error => {
-        handleNotification(error.response.data.error)
+        setNotification(error.response.data.error)
       })
       return
     } 
@@ -73,21 +78,21 @@ const App = () => {
        update(findName.id, newPerson)
        .then(returnedPerson => {
         setPersons(persons.map(person => person.id === findName.id ? returnedPerson : person))
-        handleNotification(`Updated ${returnedPerson.name}`)
+        setNotification(`Updated ${returnedPerson.name}`)
       }).catch((error) => {
-         handleNotification(error.response.data.error)
+        setNotification(error.response.data.error)
       }) 
     } 
   }
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <Notification message={notification} />
-      <Filter handleSearch={handleSearch}/>
-      <PersonForm handleNameChange={handleNameChange} handleNewNumber={handleNewNumber} onSubmit={addPerson} />
-      <Persons filteredNames={filteredNames} onClick={deletePerson}/>
-    </div>
+      <main className="mx-auto p-3 font-sans w-80 flex flex-col">
+        <h1 className='text-xl font-bold mb-3 self-center'>Phonebook</h1>
+        <Notification message={notification} />
+        <Filter handleSearch={handleSearch}/>
+        <PersonForm handleNameChange={handleNameChange} handleNewNumber={handleNewNumber} onSubmit={addPerson} />
+        <Persons filteredNames={filteredNames} onClick={deletePerson}/>
+      </main>
   )
 }
 
