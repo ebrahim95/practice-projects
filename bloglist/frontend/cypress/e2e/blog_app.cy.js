@@ -42,7 +42,7 @@ describe("Blog app", function () {
     });
 
     it("A new blog can be created", function () {
-      cy.contains("Add Blog").click();
+      cy.contains("Create New").click();
       cy.get(".title").type("Sample Blog");
       cy.get(".author").type("Superman");
       cy.get(".url").type("google.com");
@@ -54,7 +54,7 @@ describe("Blog app", function () {
 
     describe("and a blog exist", function () {
       beforeEach(function () {
-        cy.contains("Add Blog").click();
+        cy.contains("Create New").click();
         cy.createBlog({
           title: "Batman",
           author: "Bane",
@@ -92,26 +92,25 @@ describe("Blog app", function () {
           likes: 8,
         });
 
-        cy.contains("View").click();
-        cy.contains("View").click();
-        cy.get(".blogs > div")
-          .eq(0)
-          .should("not.contain", "likes: 3")
+        cy.contains("Joker").click();
+        cy.get("html")
+          .should("not.contain", "3 likes")
           .and("not.contain", "Superman");
-        cy.get(".blogs > div")
-          .eq(0)
-          .should("contain", "likes: 8")
-          .and("contain", "Joker");
-        cy.get(".blogs > div")
-          .eq(1)
-          .should("contain", "likes: 3")
-          .and("contain", "Superman");
 
-        cy.contains("View").click();
-        cy.get(".blogs > div")
-          .eq(2)
-          .should("contain", "likes: 0")
-          .and("contain", "Batman");
+        cy.contains("Blogs").click();
+
+        cy.contains("Joker").click();
+        cy.get("html").should("contain", "8 likes").and("contain", "Joker");
+
+        cy.contains("Blogs").click();
+
+        cy.contains("Superman").click();
+        cy.get("html").should("contain", "3 likes").and("contain", "Superman");
+
+        cy.contains("Blogs").click();
+
+        cy.contains("Batman").click();
+        cy.get("html").should("contain", "0 likes").and("contain", "Batman");
       });
     });
   });
