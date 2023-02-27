@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { storeUser } from "../reducers/userReducer";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const logOut = () => {
     window.localStorage.removeItem("loggedIn");
     dispatch(storeUser(null));
