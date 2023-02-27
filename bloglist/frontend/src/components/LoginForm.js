@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { setUser } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { changeNotification } from "../reducers/notificationReducer";
@@ -14,7 +13,7 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
-      dispatch(setUser(username, password));
+      dispatch(setUser(username.value, password.value));
       resetUsername();
       resetPassword();
     } catch (exception) {
