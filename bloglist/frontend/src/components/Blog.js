@@ -2,17 +2,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Blog = ({ blog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 2,
-    marginBottom: 5,
-  };
+
+  const blogStyle = "py-2 px-2 border-2 border-black mb-2 rounded-lg grid grid-cols-1 justify-items-center"
   return (
-    <div style={blogStyle} className="defaultDetails">
-      <Link to={`/blogs/${blog.id}`}>{blog.title}</Link> {blog.author} {"   "}
+    <div className={`defaultDetails ${blogStyle}`}>
+      <Link to={`/blogs/${blog.id}`}><h3 className="text-lg">{blog.title}</h3></Link> 
+      <span>By {blog.author}</span>
     </div>
   );
 };

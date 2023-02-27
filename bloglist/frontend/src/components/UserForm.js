@@ -1,22 +1,30 @@
-import { useState } from "react";
-import { setUser } from "../reducers/userReducer";
-import { useDispatch } from "react-redux";
 import { changeNotification } from "../reducers/notificationReducer";
-import { useField } from "../hooks/index"
 import { Link } from "react-router-dom";
+import { useField } from "../hooks/index"
+import userService from '../services/users'
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const UserForm = () => {
+
+  const {clearValue: resetName, ...name} = useField('text')
   const {clearValue: resetUsername, ...username} = useField('text')
   const {clearValue: resetPassword, ...password} = useField('password')
-  const dispatch = useDispatch();
-
+  const navigate = useNavigate()
+  
   const handleLogin = (event) => {
     event.preventDefault();
 
     try {
-      dispatch(setUser(username, password));
+      userService.createUser({
+        name: name.value,
+        username: username.value,
+        password: password.value
+      });
       resetUsername();
       resetPassword();
+      resetName();
+      navigate('/')
+      changeNotification("Successfully Created");
     } catch (exception) {
       changeNotification("Wrong Credentials");
     }
@@ -30,6 +38,12 @@ const LoginForm = () => {
       <h1 className="text-xl mb-2">Log into Application</h1>
       <form onSubmit={handleLogin}>
         <div>
+          <input
+            id="name"
+            {...name}
+            className={input}
+            placeholder="name"
+          />
           <input
             id="username"
             {...username}
@@ -45,12 +59,12 @@ const LoginForm = () => {
             placeholder="password"
           />
         </div>
-        <button className="border-2 border-black py-1 px-2 rounded-lg bg-green-300 my-2 hover:bg-blue-200 w-full" type="submit">Login</button>
-        <Link to="/users/create" ><button className="border-2 border-black py-1 px-2 rounded-lg bg-purple-300 hover:bg-blue-200 w-full">Create User</button></Link>
+        <button className="border-2 border-black py-1 px-2 my-2 rounded-lg bg-green-300 hover:bg-blue-200 w-full" type="submit">Submit</button>
+        <Link to="/" ><button className="border-2 border-black py-1 px-2 rounded-lg bg-red-300 hover:bg-blue-200 w-full">Cancel</button></Link>
       </form>
     </div>
   );
 };
 
 
-export default LoginForm;
+export default UserForm;
