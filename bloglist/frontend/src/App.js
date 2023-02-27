@@ -54,7 +54,7 @@ const App = () => {
 
   return (
         <Router>
-          <div className="w-[600px] p-2 flex flex-col place-items-center">
+          <div className="md:w-[600px] md:w-[310px]  p-2 flex flex-col place-items-center">
             <Navbar />
             <Notification message={notification} />
             <Togglable buttonLabel="Create New" ref={blogFormRef}>

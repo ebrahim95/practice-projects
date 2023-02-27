@@ -10,7 +10,7 @@ const Users = () => {
         <h3 className="justify-self-end text-lg">Blogs</h3>
       </div>
       {users.map((user) => (
-          <div className="flex flex-row gap-4 mb-2" key={user.id}>
+          <div className="flex flex-row gap-4 mb-2 justify-between" key={user.id}>
             <Link to={`/users/${user.id}`}>{user.name}</Link>
             <span>{user.blogs.length}</span>
           </div>
