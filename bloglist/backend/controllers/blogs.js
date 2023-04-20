@@ -1,9 +1,9 @@
 const blogsRouter = require('express').Router()
-const JsonWebToken  = require('jsonwebtoken')
+const JsonWebToken = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const { userExtractor } = require('../utils/middleware')
-const { SECRET }= require('../utils/config')
+const { SECRET } = require('../utils/config')
 
 const findUserByToken = async (token) => {
   const decodedToken = JsonWebToken.verify(token, SECRET)
@@ -24,7 +24,7 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.post('/', userExtractor, async (request, response) => {
   let { title, author, url, likes } = request.body
-  const user =  request.user
+  const user = request.user
   if (!likes) {
     likes = 0
   }
@@ -53,8 +53,8 @@ blogsRouter.post('/:id/comments', async (request, response) => {
   const { comment } = request.body
   blog.comments = [...blog.comments, comment]
 
-  const addedCommentBlog = await blog.save()
-  response.status(201).json(addedCommentBlog)
+  await blog.save()
+  response.status(201).json('hello')
 
 })
 

@@ -1,19 +1,19 @@
-import { likeBlog, removeBlog } from "../reducers/blogReducer";
+import { addComment, likeBlog, removeBlog } from "../reducers/blogReducer";
 import { changeNotification } from "../reducers/notificationReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import blogService from "../services/blogs";
 
 const BlogDetails = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const id = useParams().id;
   const navigate = useNavigate();
+  const [comment, setComment] = useState("");
+
   const blog = useSelector((state) =>
     state.blogs.find((blog) => blog.id === id)
   );
-  const [comment, setComment] = useState("");
 
   if (!blog) {
     return null;
@@ -51,8 +51,12 @@ const BlogDetails = () => {
 
   const handleComment = async (event) => {
     event.preventDefault();
-    await blogService.addComment(blog.id, comment);
-    setComment("");
+    try {
+      dispatch(addComment(blog.id, comment))
+      setComment("")
+    } catch (error) {
+      dispatch(changeNotification(error.message))
+    }
   };
 
   // tailwind styles
@@ -80,7 +84,7 @@ const BlogDetails = () => {
         ""
       )}
       <h2>Comments</h2>
-      <ul>
+      <ul className="list-disc">
         {blog.comments.map((comment, i) => (
           <li key={i}>{comment}</li>
         ))}

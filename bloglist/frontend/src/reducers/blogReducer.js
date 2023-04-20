@@ -71,5 +71,15 @@ export const removeBlog = (id) => {
     await blogService.remove(id);
     dispatch(deleteBlog(id));
     dispatch(changeNotification("Successfully Deleted"));
+    dispatch(initialBlogs());
+    dispatch(initialUserInfo());
   };
 };
+
+export const addComment = (id, comment) => {
+  return async (dispatch) => {
+    await blogService.addComment(id, comment);
+    dispatch(changeNotification("Successfully Added " + comment))
+    dispatch(initialBlogs())
+  }
+}

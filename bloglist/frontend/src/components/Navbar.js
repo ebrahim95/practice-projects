@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { storeUser } from "../reducers/userReducer";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const logOut = () => {
     window.localStorage.removeItem("loggedIn");
     dispatch(storeUser(null));
+    navigate('/')
   };
 
 
