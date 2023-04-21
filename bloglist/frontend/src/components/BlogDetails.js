@@ -90,7 +90,7 @@ const BlogDetails = () => {
         ))}
       </ul>
       <form onSubmit={handleComment}>
-        <input className={input} onChange={(event) => setComment(event.target.value)} />
+        <input className={input} value={comment} onChange={(event) => setComment(event.target.value)} />
         <button className="border-2 border-black py-1 px-2 rounded-lg bg-green-300 mb-3 hover:bg-blue-300 w-full">Submit Comment</button>
       </form>
     </div>
