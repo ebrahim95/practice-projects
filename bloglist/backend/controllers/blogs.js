@@ -8,11 +8,11 @@ const { SECRET } = require("../utils/config");
 const findUserByToken = async (token) => {
   const decodedToken = JsonWebToken.verify(token, SECRET);
   const user = await User.findById(decodedToken.id);
-  console.log(token);
   return user;
+
 };
 
-blogsRouter.get("/", async (request, response) => {
+blogsRouter.get("/", userExtractor, async (request, response) => {
   const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 });
   response.status(201).json(blogs);
 });
@@ -23,7 +23,7 @@ blogsRouter.get("/:id", async (request, response) => {
   response.status(201).json(blog);
 });
 
-blogsRouter.post("/", userExtractor, async (request, response) => {
+blogsRouter.post("/", async (request, response) => {
   let { title, author, url, likes } = request.body;
   const user = request.user;
   if (!likes) {
@@ -33,15 +33,14 @@ blogsRouter.post("/", userExtractor, async (request, response) => {
   if (!url || !title) {
     response.status(400).end();
   }
-  //FIX line 41 bug - because the user does state does not update;
-  console.log(user);
-  const blog = new Blog({
+  
+  const blog = await new Blog({
     title,
     author,
     url,
     likes,
     user: user._id,
-  });
+  }).populate("user", {username: 1, name: 1});
 
   const savedBlog = await blog.save();
   user.blogs = [...user.blogs, savedBlog._id];
@@ -72,7 +71,7 @@ blogsRouter.delete("/:id", async (request, response) => {
       }
     });
     await user.save();
-    console.log(user.blogs);
+
     return response.status(204).end();
   } else {
     response.status(401).json({
