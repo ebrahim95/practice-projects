@@ -11,8 +11,8 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
-const getTokenFrom = (request, response, next) => {
-  const authorization = request.get('authorization')
+const getTokenFrom =  (request, response, next) => {
+  const authorization =  request.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     request.token = authorization.substring(7)
   }
@@ -22,6 +22,7 @@ const getTokenFrom = (request, response, next) => {
 
 const userExtractor = async (request, response, next) => {
   const token = request.token
+
   if (token) {
     const decodedToken = JsonWebToken.verify(token, SECRET)
     const user = await User.findById(decodedToken.id)
