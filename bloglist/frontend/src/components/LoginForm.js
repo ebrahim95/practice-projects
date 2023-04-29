@@ -1,6 +1,5 @@
 import { setUser } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
-import { changeNotification } from "../reducers/notificationReducer";
 import { useField } from "../hooks/index"
 import { Link } from "react-router-dom";
 
@@ -11,14 +10,9 @@ const LoginForm = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-
-    try {
       dispatch(setUser(username.value, password.value));
       resetUsername();
       resetPassword();
-    } catch (exception) {
-      changeNotification("Wrong Credentials");
-    }
   };
 
   // eslint-disable-next-line no-multi-str
