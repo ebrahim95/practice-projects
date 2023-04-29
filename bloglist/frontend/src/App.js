@@ -10,7 +10,7 @@ import Users from "./components/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { initialBlogs } from "./reducers/blogReducer";
 import { storeUser } from "./reducers/userReducer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { initialUserInfo } from "./reducers/userInfoReducer";
 import DisplayUser from "./components/DisplayUser";
 import BlogDetails from "./components/BlogDetails";
@@ -38,36 +38,40 @@ const App = () => {
 
   const blogFormRef = useRef();
 
-  if (user === null) {
-    return (
-      <div className="w-[600px] p-2 flex flex-col place-items-center">
-        <Router>
-          <Notification message={notification} />
-          <Routes>
-            <Route path="/users/create" element={<UserForm />} />
-            <Route path="/" element={<LoginForm />} />
-          </Routes>
-        </Router>
-      </div>
-    );
-  }
+  const displayLogin = (
+    <Routes>
+      <Route path="/users/create" element={<UserForm />} />
+      <Route path="/" element={<LoginForm />} />
+    </Routes>
+  );
 
   return (
     <Router>
-      <div className="md:w-[600px]  p-2 flex flex-col place-items-center">
-        <Navbar />
-        <Notification message={notification} />
-        <Togglable buttonLabel="Create New Blog" ref={blogFormRef}>
-          <BlogForm toggleRef={blogFormRef} />
-        </Togglable>
+      <div className="md:w-[600px] p-2 flex flex-col place-items-center">
+        {user === null
+          ? (
+            <>
+              <Notification message={notification} />
+              {displayLogin}
+            </>
+          )
+          : (
+            <>
+              <Navbar />
+              <Notification message={notification} />
+              <Togglable buttonLabel="Create New Blog" ref={blogFormRef}>
+                <BlogForm toggleRef={blogFormRef} />
+              </Togglable>
 
-        <Routes>
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<DisplayUser />} />
-          <Route path="/blogs/:id" element={<BlogDetails />} />
-          <Route path="/users/create" element={<UserForm />} />
-          <Route path="/" element={<BlogRender />} />
-        </Routes>
+              <Routes>
+                <Route path="/users" element={<Users />} />
+                <Route path="/users/:id" element={<DisplayUser />} />
+                <Route path="/blogs/:id" element={<BlogDetails />} />
+                <Route path="/users/create" element={<UserForm />} />
+                <Route path="/" element={<BlogRender />} />
+              </Routes>
+            </>
+          )}
       </div>
     </Router>
   );
