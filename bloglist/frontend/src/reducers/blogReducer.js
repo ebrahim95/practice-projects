@@ -79,7 +79,7 @@ export const removeBlog = (id) => {
 export const addComment = (id, comment) => {
   return async (dispatch) => {
     await blogService.addComment(id, comment);
-    dispatch(changeNotification("Successfully Added " + comment))
-    dispatch(initialBlogs())
-  }
-}
+    dispatch(changeNotification("Successfully Added " + comment));
+    dispatch(initialBlogs());
+  };
+};

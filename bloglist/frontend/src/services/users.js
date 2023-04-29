@@ -7,8 +7,8 @@ const users = async () => {
 };
 
 const createUser = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject)
-  return response.data
-}
+  const response = await axios.post(baseUrl, newObject);
+  return response.data;
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default { users, createUser };

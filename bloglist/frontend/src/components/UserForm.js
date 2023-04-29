@@ -40,12 +40,7 @@ const UserForm = () => {
       <h1 className="text-xl mb-2">Log into Application</h1>
       <form onSubmit={handleNewUser}>
         <div>
-          <input
-            id="name"
-            {...name}
-            className={input}
-            placeholder="name"
-          />
+          <input id="name" {...name} className={input} placeholder="name" />
           <input
             id="username"
             {...username}

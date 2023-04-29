@@ -52,16 +52,17 @@ const BlogDetails = () => {
   const handleComment = async (event) => {
     event.preventDefault();
     try {
-      dispatch(addComment(blog.id, comment))
-      setComment("")
+      dispatch(addComment(blog.id, comment));
+      setComment("");
     } catch (error) {
-      dispatch(changeNotification(error.message))
+      dispatch(changeNotification(error.message));
     }
   };
 
   // tailwind styles
-  const input = "block w-full rounded-md border-0 py-2 px-3.5 text-md leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 \
-  placeholder:text-gray-400 focus:ring-2 focus:ring-inset mb-2"
+  const input =
+    "block w-full rounded-md border-0 py-2 px-3.5 text-md leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 \
+  placeholder:text-gray-400 focus:ring-2 focus:ring-inset mb-2";
 
   return (
     <div id="viewDetails">
@@ -72,12 +73,17 @@ const BlogDetails = () => {
       <br />
       <a href={blog.url}>{blog.url}</a>
       <br />
-
-      <button className="handleLikes border-2 border-black py-1 px-2 rounded-lg bg-purple-300 mb-2 hover:bg-blue-200 w-full mt-3" onClick={handleLikes}>
+      <button
+        className="handleLikes border-2 border-black py-1 px-2 rounded-lg bg-purple-300 mb-2 hover:bg-blue-200 w-full mt-3"
+        onClick={handleLikes}
+      >
         Like
       </button>
       {blog.user.username === user.username ? (
-        <button className="removeButton border-2 border-black py-1 px-2 rounded-lg bg-red-300 mb-3 hover:bg-blue-200 w-full" onClick={handleDelete}>
+        <button
+          className="removeButton border-2 border-black py-1 px-2 rounded-lg bg-red-300 mb-3 hover:bg-blue-200 w-full"
+          onClick={handleDelete}
+        >
           Remove Blog
         </button>
       ) : (
@@ -90,8 +96,14 @@ const BlogDetails = () => {
         ))}
       </ul>
       <form onSubmit={handleComment}>
-        <input className={input} value={comment} onChange={(event) => setComment(event.target.value)} />
-        <button className="border-2 border-black py-1 px-2 rounded-lg bg-green-300 mb-3 hover:bg-blue-300 w-full">Submit Comment</button>
+        <input
+          className={input}
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
+        />
+        <button className="border-2 border-black py-1 px-2 rounded-lg bg-green-300 mb-3 hover:bg-blue-300 w-full">
+          Submit Comment
+        </button>
       </form>
     </div>
   );
