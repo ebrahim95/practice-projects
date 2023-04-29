@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from "../services/login";
+import blogService from "../services/blogs"
 import { changeNotification } from "./notificationReducer";
 
 const userSlice = createSlice({
@@ -18,9 +19,15 @@ export default userSlice.reducer;
 
 export const setUser = (username, password) => {
   return async (dispatch) => {
-    const user = await loginService.login({ username, password });
+    try {
+const user = await loginService.login({ username, password });
     window.localStorage.setItem("loggedIn", JSON.stringify(user));
     dispatch(storeUser(user));
+    blogService.setToken(user.token) 
     dispatch(changeNotification(`Successfully logged in ${user.name}`));
+    } catch (error) {
+      dispatch(changeNotification("Wrong Credentials"))
+    }
+    
   };
 };
